@@ -3,6 +3,7 @@ import '../core/constants/app_colors.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/ingredients/ingredients_screen.dart';
 import '../screens/recipes/recipes_screen.dart';
+import '../screens/shopping/shopping_screen.dart';
 import '../screens/timer/timer_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
@@ -20,6 +21,7 @@ class _MainNavigationState extends State<MainNavigation> {
     HomeScreen(),
     IngredientsScreen(),
     RecipesScreen(),
+    ShoppingScreen(),
     TimerScreen(),
     ProfileScreen(),
   ];
@@ -63,6 +65,11 @@ class _MainNavigationState extends State<MainNavigation> {
                 icon: Icon(Icons.menu_book_outlined),
                 activeIcon: Icon(Icons.menu_book_rounded),
                 label: 'Recipes',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined),
+                activeIcon: Icon(Icons.shopping_cart_rounded),
+                label: 'Shopping',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.timer_outlined),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/recipe_model.dart';
 import '../timer/timer_screen.dart';
+import '../ingredients/ingredients_screen.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final RecipeModel recipe;
@@ -102,21 +103,16 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  // Food image (uses banner_food for fried rice, else emoji)
-                  recipe.name == 'Vegetable Fried Rice'
-                      ? Image.asset(
-                          'assets/images/banner_food.png',
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          color: _bgColor,
-                          child: Center(
-                            child: Text(
-                              recipe.emoji,
-                              style: const TextStyle(fontSize: 110),
-                            ),
-                          ),
-                        ),
+                  // Food emoji area (safe fallback — no asset crash risk)
+                  Container(
+                    color: _bgColor,
+                    child: Center(
+                      child: Text(
+                        recipe.emoji,
+                        style: const TextStyle(fontSize: 110),
+                      ),
+                    ),
+                  ),
                   // Gradient overlay at bottom
                   Positioned(
                     bottom: 0,
@@ -217,7 +213,14 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const IngredientsScreen(),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'View all',
                           style: TextStyle(

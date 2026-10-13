@@ -259,14 +259,35 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
               itemBuilder: (context, index) {
                 final item = _filteredIngredients[index];
                 final globalIndex = _ingredients.indexOf(item);
-                return _IngredientTile(
-                  item: item,
-                  onToggle: () {
-                    setState(() {
-                      _ingredients[globalIndex]['checked'] =
-                          !_ingredients[globalIndex]['checked'];
-                    });
+                return Dismissible(
+                  key: Key('${item['name']}_$globalIndex'),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20),
+                    color: Colors.redAccent.withValues(alpha: 0.1),
+                    child: const Icon(Icons.delete_outline_rounded,
+                        color: Colors.redAccent),
+                  ),
+                  onDismissed: (_) {
+                    setState(() => _ingredients.removeAt(globalIndex));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${item['name']} removed'),
+                        duration: const Duration(seconds: 1),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
                   },
+                  child: _IngredientTile(
+                    item: item,
+                    onToggle: () {
+                      setState(() {
+                        _ingredients[globalIndex]['checked'] =
+                            !_ingredients[globalIndex]['checked'];
+                      });
+                    },
+                  ),
                 );
               },
             ),
@@ -277,85 +298,185 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
   }
 
   void _showAddDialog() {
+    final nameCtrl = TextEditingController();
+    final qtyCtrl = TextEditingController();
+    String selectedCategory = 'Vegetables';
+    final categories = ['Vegetables', 'Fruits', 'Dairy', 'Others'];
+    final emojis = {
+      'Vegetables': '🥦',
+      'Fruits': '🍎',
+      'Dairy': '🥛',
+      'Others': '🛒',
+    };
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-          left: 24,
-          right: 24,
-          top: 24,
-        ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Add Ingredient',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Poppins',
-                color: Color(0xFF1A2E1F),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Ingredient name',
-                filled: true,
-                fillColor: const Color(0xFFF2F4E6),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Quantity (e.g. 3 pcs)',
-                filled: true,
-                fillColor: const Color(0xFFF2F4E6),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () => Navigator.pop(ctx),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E7D52),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setModalState) => Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+            left: 24,
+            right: 24,
+            top: 24,
+          ),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Add Ingredient',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Poppins',
+                      color: Color(0xFF1A2E1F),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Add Ingredient',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: nameCtrl,
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: 'Ingredient name (e.g. Garlic)',
+                  filled: true,
+                  fillColor: const Color(0xFFF2F4E6),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              TextField(
+                controller: qtyCtrl,
+                decoration: InputDecoration(
+                  hintText: 'Quantity (e.g. 3 pcs)',
+                  filled: true,
+                  fillColor: const Color(0xFFF2F4E6),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Category Picker
+              const Text(
+                'Category',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF4A6355),
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: categories.map((cat) {
+                  final isSelected = selectedCategory == cat;
+                  return GestureDetector(
+                    onTap: () =>
+                        setModalState(() => selectedCategory = cat),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color(0xFF2E7D52)
+                            : const Color(0xFFF2F4E6),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        cat,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected
+                              ? Colors.white
+                              : const Color(0xFF8FAF9A),
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final name = nameCtrl.text.trim();
+                    if (name.isNotEmpty) {
+                      setState(() {
+                        _ingredients.add({
+                          'name': name,
+                          'qty': qtyCtrl.text.trim().isEmpty
+                              ? '1 unit'
+                              : qtyCtrl.text.trim(),
+                          'asset': null,
+                          'emoji': emojis[selectedCategory] ?? '🛒',
+                          'color': _categoryColor(selectedCategory),
+                          'checked': false,
+                          'category': selectedCategory,
+                        });
+                      });
+                      Navigator.pop(ctx);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2E7D52),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    'Add Ingredient',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Color _categoryColor(String category) {
+    switch (category) {
+      case 'Vegetables':
+        return const Color(0xFFE8F5E9);
+      case 'Fruits':
+        return const Color(0xFFFFECEC);
+      case 'Dairy':
+        return const Color(0xFFE3F2FD);
+      default:
+        return const Color(0xFFF5F5DC);
+    }
   }
 }
 

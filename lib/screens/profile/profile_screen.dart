@@ -3,6 +3,7 @@ import '../recipes/recipes_screen.dart';
 import '../ingredients/ingredients_screen.dart';
 import '../shopping/shopping_screen.dart';
 import '../timer/timer_screen.dart';
+import '../../models/recipe_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -226,15 +227,24 @@ class ProfileScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _buildStatCard('12', 'Recipes Saved'),
+                  child: _buildStatCard(
+                    '${RecipesData.getAllRecipes().length}',
+                    'Recipes Saved',
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _buildStatCard('6', 'Ingredients'),
+                  child: _buildStatCard(
+                    '${RecipesData.getAllRecipes().where((r) => r.isFavorite).length}',
+                    'Favorites',
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _buildStatCard('3', 'Meal Plans'),
+                  child: _buildStatCard(
+                    '${RecipesData.getAllRecipes().map((r) => r.category).toSet().length}',
+                    'Categories',
+                  ),
                 ),
               ],
             ),
