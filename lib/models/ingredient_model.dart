@@ -61,7 +61,7 @@ class IngredientsData {
       IngredientModel(name: 'Eggs', quantity: '6 pcs', emoji: '🥚'),
       IngredientModel(name: 'Bread', quantity: '1 loaf', emoji: '🍞'),
       IngredientModel(name: 'Cheese', quantity: '200 g', emoji: '🧀'),
-      IngredientModel(name: 'Bell Pepper', quantity: '2 pcs', emoji: '🫑'),
+      IngredientModel(name: 'Bell Pepper', quantity: '3 pcs', emoji: '🫑'),
       IngredientModel(name: 'Lettuce', quantity: '1 bunch', emoji: '🥬'),
     ];
   }
