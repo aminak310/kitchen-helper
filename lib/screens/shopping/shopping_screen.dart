@@ -53,6 +53,48 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
       'bgColor': const Color(0xFFEEF7EE),
       'checked': false,
     },
+    {
+      'name': 'Chicken Breast',
+      'qty': '500 g',
+      'emoji': '🍗',
+      'bgColor': const Color(0xFFFFF3E0),
+      'checked': false,
+    },
+    {
+      'name': 'Basmati Rice',
+      'qty': '1 kg',
+      'emoji': '🍚',
+      'bgColor': const Color(0xFFF1F8E9),
+      'checked': false,
+    },
+    {
+      'name': 'Olive Oil',
+      'qty': '500 ml',
+      'emoji': '🫒',
+      'bgColor': const Color(0xFFE8F5E9),
+      'checked': false,
+    },
+    {
+      'name': 'Strawberries',
+      'qty': '250 g',
+      'emoji': '🍓',
+      'bgColor': const Color(0xFFFFCDD2),
+      'checked': false,
+    },
+    {
+      'name': 'Pasta',
+      'qty': '500 g',
+      'emoji': '🍝',
+      'bgColor': const Color(0xFFFFF8E1),
+      'checked': false,
+    },
+    {
+      'name': 'Dark Chocolate',
+      'qty': '100 g',
+      'emoji': '🍫',
+      'bgColor': const Color(0xFFEFEBE9),
+      'checked': false,
+    },
   ];
 
   final List<Map<String, dynamic>> _purchasedItems = [
@@ -75,6 +117,27 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
       'qty': '4 pcs',
       'emoji': '🥔',
       'bgColor': const Color(0xFFFFF8E1),
+      'checked': true,
+    },
+    {
+      'name': 'Garlic',
+      'qty': '1 bulb',
+      'emoji': '🧄',
+      'bgColor': const Color(0xFFF5F5DC),
+      'checked': true,
+    },
+    {
+      'name': 'Butter',
+      'qty': '250 g',
+      'emoji': '🧈',
+      'bgColor': const Color(0xFFFFF8E1),
+      'checked': true,
+    },
+    {
+      'name': 'Carrot',
+      'qty': '3 pcs',
+      'emoji': '🥕',
+      'bgColor': const Color(0xFFFFECB3),
       'checked': true,
     },
   ];

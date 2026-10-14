@@ -19,6 +19,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
     'Breakfast',
     'Lunch',
     'Dinner',
+    'Dessert',
     'Snacks',
   ];
 

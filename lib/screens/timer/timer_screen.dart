@@ -121,7 +121,9 @@ class _TimerScreenState extends State<TimerScreen>
             // ── Background decorative kitchen icons ──
             ..._buildBgIcons(context),
 
-            Column(
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
               children: [
                 // ── App Bar ──
                 Padding(
@@ -316,8 +318,10 @@ class _TimerScreenState extends State<TimerScreen>
                     ),
                   ),
                 ),
+                const SizedBox(height: 24),
               ],
             ),
+          ),
           ],
         ),
       ),
