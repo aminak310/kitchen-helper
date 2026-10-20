@@ -663,7 +663,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                         color: Color(0xFF1B5E35),
-                                        fontFamily: 'Poppin',
+                                        fontFamily: 'Poppins',
                                       ),
                                     ),
                                     const SizedBox(width: 8),
