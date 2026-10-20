@@ -34,15 +34,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: primaryGreen, size: 24),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Settings opened'),
-                  duration: Duration(seconds: 1),
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
-            },
+            onPressed: () => _showSettings(context),
           ),
           const SizedBox(width: 12),
         ],
@@ -321,29 +313,19 @@ class ProfileScreen extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.settings_outlined,
                     title: 'Settings',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Settings menu tapped'),
-                          duration: Duration(seconds: 1),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                    },
+                    onTap: () => _showSettings(context),
+                  ),
+                  _buildDivider(),
+                  _buildMenuItem(
+                    icon: Icons.privacy_tip_outlined,
+                    title: 'Privacy Policy',
+                    onTap: () => _showPrivacyPolicy(context),
                   ),
                   _buildDivider(),
                   _buildMenuItem(
                     icon: Icons.help_outline_rounded,
                     title: 'Help & Support',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Kitchen Helper v1.0.0 • Help & Support'),
-                          duration: Duration(seconds: 2),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                    },
+                    onTap: () => _showHelpSupport(context),
                   ),
                 ],
               ),
@@ -518,4 +500,340 @@ class ProfileScreen extends StatelessWidget {
       color: Color(0xFFF1EFEA),
     );
   }
+
+  void _showPrivacyPolicy(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          height: MediaQuery.of(ctx).size.height * 0.85,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFAF8F3),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 44,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.black26,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.privacy_tip_rounded, color: Color(0xFF1B5E35), size: 26),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1B5E35),
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, color: Color(0xFF1B5E35)),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFE4EDE0)),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(20),
+                  children: const [
+                    Text(
+                      'Last updated: October 2026',
+                      style: TextStyle(fontSize: 12, color: Color(0xFF7E9383), fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Introduction',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Kitchen Helper ("we", "our", or "the app") is committed to protecting your privacy. This Privacy Policy explains our practices regarding user information for Kitchen Helper.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '1. Information We Do NOT Collect',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      '• We do not collect personally identifiable information (such as your real name, address, email, or phone number).\n'
+                      '• We do not track or collect your location data.\n'
+                      '• We do not access your contacts, camera, photos, or microphone.\n'
+                      '• We do not use third-party tracking cookies or advertising identifiers.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '2. Local Device Storage',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'All your app preferences, saved recipes, custom ingredients, and shopping lists are stored solely on your device. This data never leaves your device and is not transmitted to external servers.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '3. Third-Party Services & Ads',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Kitchen Helper does not include third-party advertising SDKs or data brokers. No data is shared with or sold to any third party.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '4. Children\'s Privacy (COPPA Compliance)',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Our app is safe for general audiences. Because we do not collect any personal data whatsoever, we comply with COPPA and global child privacy standards.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '5. Data Deletion',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'You retain complete control of your data. Uninstalling Kitchen Helper or clearing app cache/storage in your device settings will permanently remove all local data.',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '6. Contact Information',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1A2E1F)),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'If you have any questions or suggestions regarding this Privacy Policy, please contact the developer at:\nsupport@kitchenhelper.app',
+                      style: TextStyle(fontSize: 13.5, height: 1.5, color: Color(0xFF3B5242)),
+                    ),
+                    SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSettings(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctx, setSheetState) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: const BoxDecoration(
+                color: Color(0xFFFAF8F3),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 44,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Settings & Preferences',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1B5E35),
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close_rounded, color: Color(0xFF1B5E35)),
+                        onPressed: () => Navigator.pop(ctx),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ListTile(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    tileColor: Colors.white,
+                    leading: const Icon(Icons.straighten_rounded, color: Color(0xFF2E7D52)),
+                    title: const Text('Measurement Units', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                    subtitle: const Text('Metric (grams, liters, ml)', style: TextStyle(fontSize: 12, color: Color(0xFF7E9383))),
+                    trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF2E7D52), size: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    tileColor: Colors.white,
+                    leading: const Icon(Icons.notifications_active_outlined, color: Color(0xFF2E7D52)),
+                    title: const Text('Timer Sound Alert', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                    subtitle: const Text('Chime & in-app alerts active', style: TextStyle(fontSize: 12, color: Color(0xFF7E9383))),
+                    trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF2E7D52), size: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    tileColor: Colors.white,
+                    leading: const Icon(Icons.info_outline_rounded, color: Color(0xFF2E7D52)),
+                    title: const Text('App Version', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                    trailing: const Text('v1.0.0 (Build 1)', style: TextStyle(color: Color(0xFF7E9383), fontWeight: FontWeight.w500)),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showHelpSupport(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          height: MediaQuery.of(ctx).size.height * 0.75,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFAF8F3),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 44,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.black26,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.help_center_rounded, color: Color(0xFF1B5E35), size: 26),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Text(
+                        'Help & Support',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1B5E35),
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, color: Color(0xFF1B5E35)),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFE4EDE0)),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(20),
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFE4EDE0)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text('🍳 Cooking Timer', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Color(0xFF1B5E35))),
+                          SizedBox(height: 4),
+                          Text('Use quick presets (5m, 10m, 15m, 30m) or customize the time. When the timer hits 0:00, an alert dialog will notify you.', style: TextStyle(fontSize: 13, color: Color(0xFF3B5242))),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFE4EDE0)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text('🛒 Shopping List', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Color(0xFF1B5E35))),
+                          SizedBox(height: 4),
+                          Text('Tap items to mark them as purchased, or use the tabs to separate needed ingredients from already purchased items.', style: TextStyle(fontSize: 13, color: Color(0xFF3B5242))),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFE4EDE0)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text('✉️ Developer Contact', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Color(0xFF1B5E35))),
+                          SizedBox(height: 4),
+                          Text('For inquiries, feedback, or assistance, reach us at support@kitchenhelper.app. We typically respond within 24 hours.', style: TextStyle(fontSize: 13, color: Color(0xFF3B5242))),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
+

@@ -5,7 +5,6 @@ import '../screens/ingredients/ingredients_screen.dart';
 import '../screens/recipes/recipes_screen.dart';
 import '../screens/shopping/shopping_screen.dart';
 import '../screens/timer/timer_screen.dart';
-import '../screens/profile/profile_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -23,7 +22,6 @@ class _MainNavigationState extends State<MainNavigation> {
     RecipesScreen(),
     ShoppingScreen(),
     TimerScreen(),
-    ProfileScreen(),
   ];
 
   @override
@@ -75,11 +73,6 @@ class _MainNavigationState extends State<MainNavigation> {
                 icon: Icon(Icons.timer_outlined),
                 activeIcon: Icon(Icons.timer_rounded),
                 label: 'Timer',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline_rounded),
-                activeIcon: Icon(Icons.person_rounded),
-                label: 'Profile',
               ),
             ],
           ),

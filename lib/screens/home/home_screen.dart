@@ -33,9 +33,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String get _greeting {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning,';
-    if (hour < 17) return 'Good Afternoon,';
-    return 'Good Evening,';
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
+
+  String get _cookingQuote {
+    final quotes = [
+      'Cooking is love made visible',
+      'Life is too short for bad food',
+      'Good food, good mood',
+      'Cooking is an art, eating is a pleasure',
+      'The kitchen is the heart of home',
+      'Happiness is homemade',
+      'Cook with love, serve with joy',
+      'Food tastes better when shared',
+      'Great meals start here',
+      'Every recipe tells a story',
+    ];
+    // Use the day to keep it consistent throughout the day
+    final index = DateTime.now().day % quotes.length;
+    return quotes[index];
   }
 
   void _onSearchChanged(String query) {
@@ -84,21 +102,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontFamily: 'Poppins',
                             ),
                           ),
-                          Row(
-                            children: const [
-                              Text(
-                                'Amina',
-                                style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.w800,
-                                  color: Color(0xFF1A2E1F),
-                                  fontFamily: 'Poppins',
-                                  height: 1.2,
-                                ),
-                              ),
-                              SizedBox(width: 6),
-                              Text('🌿', style: TextStyle(fontSize: 20)),
-                            ],
+                          Text(
+                            _cookingQuote,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF1A2E1F),
+                              fontFamily: 'Poppins',
+                              height: 1.2,
+                            ),
                           ),
                         ],
                       ),
@@ -451,19 +463,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       iconBg: const Color(0xFFFFEDD5),
                                       title: 'Meal Planner',
                                       subtitle: 'Plan your week',
-                                      onTap: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Meal Planner coming soon! 📅'),
-                                            duration:
-                                                Duration(seconds: 1),
-                                            behavior:
-                                                SnackBarBehavior.floating,
-                                          ),
-                                        );
-                                      },
+                                      onTap: () => _showMealPlanner(context),
                                     ),
                                   ),
                                 ],
@@ -542,6 +542,183 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showMealPlanner(BuildContext context) {
+    final days = [
+      {'day': 'Monday', 'tag': 'Lunch', 'recipe': _allRecipes.isNotEmpty ? _allRecipes[0] : null},
+      {'day': 'Tuesday', 'tag': 'Dinner', 'recipe': _allRecipes.length > 1 ? _allRecipes[1] : null},
+      {'day': 'Wednesday', 'tag': 'Dinner', 'recipe': _allRecipes.length > 2 ? _allRecipes[2] : null},
+      {'day': 'Thursday', 'tag': 'Lunch', 'recipe': _allRecipes.length > 3 ? _allRecipes[3] : null},
+      {'day': 'Friday', 'tag': 'Dinner', 'recipe': _allRecipes.length > 4 ? _allRecipes[4] : null},
+      {'day': 'Saturday', 'tag': 'Breakfast', 'recipe': _allRecipes.length > 5 ? _allRecipes[5] : null},
+      {'day': 'Sunday', 'tag': 'Family Dinner', 'recipe': _allRecipes.isNotEmpty ? _allRecipes[0] : null},
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          height: MediaQuery.of(ctx).size.height * 0.85,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFAF8F3),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 44,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.black26,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_month_rounded, color: Color(0xFF1B5E35), size: 26),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Weekly Meal Planner',
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF1B5E35),
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          Text(
+                            'Plan your healthy recipes day-by-day',
+                            style: TextStyle(fontSize: 12, color: Color(0xFF6B8B74)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, color: Color(0xFF1B5E35)),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFE4EDE0)),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(20),
+                  itemCount: days.length,
+                  itemBuilder: (context, index) {
+                    final item = days[index];
+                    final RecipeModel? recipe = item['recipe'] as RecipeModel?;
+
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFFE4EDE0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.02),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF1F7EE),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Text(
+                              recipe?.emoji ?? '🍲',
+                              style: const TextStyle(fontSize: 24),
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      item['day'] as String,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF1B5E35),
+                                        fontFamily: 'Poppin',
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFFF3E0),
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Text(
+                                        item['tag'] as String,
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFFE8892A),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  recipe?.name ?? 'Healthy Meal Plan',
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF2E4032),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (recipe != null)
+                            IconButton(
+                              icon: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Color(0xFF2E7D52)),
+                              onPressed: () {
+                                Navigator.pop(ctx);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => RecipeDetailScreen(recipe: recipe),
+                                  ),
+                                );
+                              },
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -723,3 +900,4 @@ class _RecipeCard extends StatelessWidget {
     );
   }
 }
+
