@@ -115,37 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('No new notifications 🔔'),
-                            duration: Duration(seconds: 1),
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 46,
-                        height: 46,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.07),
-                              blurRadius: 10,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.notifications_outlined,
-                          color: Color(0xFF4A6355),
-                          size: 22,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
