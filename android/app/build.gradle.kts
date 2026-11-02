@@ -17,7 +17,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.amina.khelper"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = "30.0.14904198"
 
     compileOptions {
@@ -28,8 +28,7 @@ android {
     defaultConfig {
         applicationId = "com.amina.khelper"
         minSdk = flutter.minSdkVersion
-        // Google Play requires targeting at least Android 14 (API 34)
-        targetSdk = 34
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

@@ -69,7 +69,7 @@ class IngredientsData {
   static List<IngredientModel> getPurchasedList() {
     return [
       IngredientModel(name: 'Tomato', quantity: '5 pcs', emoji: '🍅', isChecked: true),
-      IngredientModel(name: 'Onion', quantity: '3 pcs', emoji: '🧅', isChecked: true),
+      IngredientModel(name: 'Onion', quantity: '4 pcs', emoji: '🧅', isChecked: true),
       IngredientModel(name: 'Potato', quantity: '4 pcs', emoji: '🥔', isChecked: true),
     ];
   }
