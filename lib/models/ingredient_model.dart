@@ -58,7 +58,7 @@ class IngredientsData {
   static List<IngredientModel> getShoppingList() {
     return [
       IngredientModel(name: 'Milk', quantity: '1 liter', emoji: '🥛'),
-      IngredientModel(name: 'Eggs', quantity: '6 pcs', emoji: '🥚'),
+      IngredientModel(name: 'Egg', quantity: '6 pcs', emoji: '🥚'),
       IngredientModel(name: 'Bread', quantity: '1 loaf', emoji: '🍞'),
       IngredientModel(name: 'Cheese', quantity: '200 g', emoji: '🧀'),
       IngredientModel(name: 'Bell Pepper', quantity: '3 pcs', emoji: '🫑'),
