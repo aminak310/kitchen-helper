@@ -70,7 +70,7 @@ class IngredientsData {
     return [
       IngredientModel(name: 'Tomato', quantity: '5 pcs', emoji: '🍅', isChecked: true),
       IngredientModel(name: 'Onion', quantity: '4 pcs', emoji: '🧅', isChecked: true),
-      IngredientModel(name: 'Potato', quantity: '4 pcs', emoji: '🥔', isChecked: true),
+      IngredientModel(name: 'Potato', quantity: '5 pcs', emoji: '🥔', isChecked: true),
     ];
   }
 }
