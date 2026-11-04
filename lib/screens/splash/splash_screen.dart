@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _bowlFade;
   late Animation<Offset> _bowlSlide;
   late Animation<double> _floatAnim;
+
+  Timer? _navTimer;
 
   @override
   void initState() {
@@ -90,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
     _mainController.forward();
 
     // Navigate to main after 3.5 seconds
-    Future.delayed(const Duration(milliseconds: 3500), () {
+    _navTimer = Timer(const Duration(milliseconds: 3500), () {
       if (mounted) {
         Navigator.of(context).pushReplacementNamed('/main');
       }
@@ -99,6 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
+    _navTimer?.cancel();
     _mainController.dispose();
     _floatController.dispose();
     super.dispose();
