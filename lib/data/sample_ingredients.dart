@@ -5,7 +5,7 @@ export '../models/ingredient_model.dart';
 class SampleIngredients {
   static const List<String> categories = [
     'All',
-    'Vegetable',
+    'Vegetables',
     'Fruits',
     'Dairy & Eggs',
     'Meat & Poultry',
