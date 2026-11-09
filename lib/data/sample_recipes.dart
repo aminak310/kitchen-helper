@@ -9,7 +9,7 @@ class SampleRecipes {
     'Lunch',
     'Dinner',
     'Dessert',
-    'Snack',
+    'Snacks',
   ];
 
   static List<RecipeModel> getAllRecipes() {
