@@ -26,7 +26,7 @@ class SampleRecipes {
         serves: 2,
         ingredients: [
           'Fettuccine or Penne — 250 g',
-          'Heavy Cream — 1 cup',
+          'Heavy Cream — 2 cup',
           'Butter — 2 tbsp',
           'Garlic — 3 cloves minced',
           'Parmesan Cheese — ½ cup',
