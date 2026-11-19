@@ -30,7 +30,7 @@ class SampleRecipes {
           'Butter — 2 tbsp',
           'Garlic — 3 cloves minced',
           'Parmesan Cheese — ½ cup',
-          'Black Pepper & Salt to taste',
+          'Black Pepper & Salt to tastes',
         ],
         steps: [
           'Boil pasta in salted water until al dente.',
